@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nev1er | Web developer and Discord server builder</title>
+<meta name="description" content="Nev1er is a web developer and Discord server builder. Ex-competitive Call of Duty: Mobile player.">
+<meta name="theme-color" content="#1a0b3d">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Crect width=%2216%22 height=%2216%22 fill=%22%231a0b3d%22/%3E%3Cpath d=%22M3 13V3h2l6 7V3h2v10h-2L5 6v7z%22 fill=%22%23e9d5ff%22/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600;700&family=Alegreya:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#fbf5ff; --ink-soft:rgba(251,245,255,.82);
+  --night:#12062b; --lilac:#c4b5fd; --orchid:#e879f9; --ice:#d9f8ff; --gold:#ffd86b;
+  --glass:linear-gradient(135deg,rgba(255,255,255,.2),rgba(255,255,255,.06));
+  --edge:rgba(255,255,255,.3); --row:3.6rem;
+  --pix:'Pixelify Sans','Courier New',monospace; --serif:'Alegreya',Georgia,serif;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:0}
+body{background:var(--night);color:var(--ink);font:400 clamp(1.3rem,1.15rem + .5vw,1.5rem)/1.65 var(--serif);-webkit-font-smoothing:antialiased;min-height:100vh;text-shadow:0 1px 10px rgba(18,6,43,.35)}
+#bg{position:fixed;inset:0;width:100%;height:100%;image-rendering:pixelated;image-rendering:crisp-edges;z-index:-1}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--ice);outline-offset:3px;border-radius:8px}
+
+.glass{position:relative;isolation:isolate;overflow:hidden;background:var(--glass);
+  -webkit-backdrop-filter:blur(22px) saturate(1.7) brightness(1.05);backdrop-filter:blur(22px) saturate(1.7) brightness(1.05);
+  border:1px solid var(--edge);border-top-color:rgba(255,255,255,.55);border-left-color:rgba(255,255,255,.42);border-radius:22px;
+  box-shadow:0 10px 40px rgba(18,6,43,.5),inset 0 1px 0 rgba(255,255,255,.55),inset 0 -1px 0 rgba(255,255,255,.1),inset 0 0 28px rgba(255,255,255,.06)}
+.glass::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(160deg,rgba(255,255,255,.28) 0%,rgba(255,255,255,0) 38%),rgba(40,14,90,.16)}
+.glass::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:0;transition:opacity .35s;
+  background:radial-gradient(280px circle at var(--mx,50%) var(--my,0%),rgba(255,255,255,.26),transparent 70%)}
+.glass:hover::after{opacity:1}
+
+header.glass{position:fixed;top:.9rem;left:50%;transform:translateX(-50%);z-index:20;width:min(94vw,880px);
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.75rem 1.5rem;border-radius:999px}
+header.glass::before{background:linear-gradient(160deg,rgba(255,255,255,.28),rgba(255,255,255,0) 60%),rgba(30,10,70,.5)}
+header .logo{font:700 1.6rem/1 var(--pix);text-decoration:none;letter-spacing:.04em}
+header nav{display:flex;gap:1.8rem;font:500 1.2rem/1 var(--pix)}
+header nav a{text-decoration:none;color:var(--ink-soft);transition:color .2s}
+header nav a:hover{color:#fff}
+@media(max-width:620px){header .logo{display:none}header nav{width:100%;justify-content:space-between;gap:.5rem;font-size:1.05rem}header{padding:.8rem 1.2rem}}
+
+main{width:min(92vw,1060px);margin:0 auto}
+section{padding:6.5rem 0 0}
+h2{font:700 clamp(2.5rem,6vw,3.9rem)/1.05 var(--pix);letter-spacing:.01em;margin-bottom:1.1rem;text-shadow:0 0 24px rgba(196,181,253,.6)}
+h3{font:600 clamp(1.5rem,3vw,1.85rem)/1.2 var(--pix);margin-bottom:.6rem}
+.lede{color:var(--ink-soft);max-width:44ch;margin:0 0 2rem;font-size:1.1em}
+.pad{padding:clamp(1.5rem,3vw,2.2rem)}
+.grid{display:grid;gap:1.3rem}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr))}
+p{max-width:58ch}
+p+p{margin-top:1rem}
+
+.hero{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:6.5rem 0 3rem}
+.title{font:700 clamp(4rem,14vw,10rem)/.95 var(--pix);letter-spacing:.03em;color:var(--ice);
+  text-shadow:0 0 12px rgba(180,240,255,.9),0 0 40px rgba(167,139,250,.9),0 5px 0 rgba(88,28,135,.8);display:flex}
+.title span{display:inline-block;animation:boot .7s steps(5) both;animation-delay:calc(var(--i)*.12s)}
+@keyframes boot{0%{opacity:0;transform:translateY(-14px);filter:brightness(3)}60%{opacity:1;filter:brightness(2)}100%{opacity:1;transform:none;filter:none}}
+.tag{font:500 clamp(1.5rem,3vw,2rem)/1.3 var(--serif);color:var(--ink);margin:.9rem 0 1.8rem;animation:boot .8s steps(6) .9s both}
+.menu{width:min(100%,540px);padding:.7rem 0;position:relative;animation:boot .8s steps(6) 1.1s both}
+.menu ul{list-style:none;padding:0}
+.menu .bar{position:absolute;left:0;right:0;top:0;height:var(--row);pointer-events:none;
+  background:linear-gradient(90deg,rgba(150,120,255,.7),rgba(232,121,249,.2) 70%,transparent);
+  border:1px solid rgba(255,255,255,.45);border-right:0;border-radius:8px 0 0 8px;
+  transition:transform .28s cubic-bezier(.2,.9,.3,1.2);box-shadow:0 0 24px rgba(167,139,250,.55)}
+.menu a{position:relative;z-index:1;display:block;height:var(--row);line-height:var(--row);padding:0 1.8rem;text-decoration:none;font:500 clamp(1.7rem,3.2vw,2.1rem)/var(--row) var(--serif);letter-spacing:.02em;transition:padding .25s}
+.menu a.sel{padding-left:2.4rem}
+.menu a.extra{color:var(--gold);text-shadow:0 0 14px rgba(255,216,107,.55)}
+.ver{margin-top:.9rem;font:400 1rem var(--pix);color:rgba(255,255,255,.6)}
+.hint{font:400 1.05rem var(--pix);color:rgba(255,255,255,.72);margin-top:.9rem}
+@media(hover:none){.hint{display:none}}
+
+#about{padding-top:2rem}
+#about .split{align-items:stretch}
+.btn{display:inline-block;margin-top:1.4rem;font:600 1.2rem/1 var(--pix);text-decoration:none;padding:1rem 1.6rem;border-radius:14px;
+  background:linear-gradient(180deg,rgba(255,255,255,.34),rgba(255,255,255,.1));border:1px solid rgba(255,255,255,.5);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 6px 18px rgba(18,6,43,.4);transition:transform .15s steps(3),box-shadow .2s}
+.btn:hover{transform:translateY(-3px);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 10px 24px rgba(124,58,237,.55)}
+.btn:active{transform:translateY(1px)}
+.host{margin-top:1rem;font:400 1.1rem var(--pix);color:var(--lilac);word-break:break-all}
+.media{display:block;width:100%;height:auto;border-radius:14px;border:1px solid var(--edge)}
+.stat{padding:1.5rem 1.6rem}
+.stat b{display:block;font:700 clamp(2.6rem,5vw,3.6rem)/1 var(--pix);color:var(--ice);text-shadow:0 0 18px rgba(180,240,255,.55);margin-bottom:.4rem}
+.stat span{color:var(--ink-soft);font-size:1.15em}
+.split{display:grid;gap:1.4rem;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);align-items:center}
+.split.rev{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}
+@media(max-width:780px){.split,.split.rev{grid-template-columns:1fr}}
+.vid{max-width:340px;width:100%;margin:0 auto;padding:.7rem}
+.vid video{width:100%;display:block;border-radius:14px;background:#000}
+.badge{display:inline-block;font:600 1rem/1 var(--pix);padding:.5rem .9rem;border-radius:999px;color:#1a0b3d;text-shadow:none;background:linear-gradient(180deg,#fff3c4,var(--gold));margin-bottom:1rem}
+.book{max-width:260px;width:100%;margin:0 auto;padding:.7rem}
+.book img{width:100%;display:block;border-radius:12px}
+.contact a.row{display:flex;justify-content:space-between;align-items:center;gap:1rem;text-decoration:none;padding:1.5rem 1.6rem}
+.contact a.row small{display:block;color:var(--ink-soft);font-size:1.05rem}
+.contact a.row b{font:600 clamp(1.25rem,2.6vw,1.6rem)/1.3 var(--pix);word-break:break-all}
+footer{text-align:center;color:var(--ink-soft);padding:5.5rem 1rem 4rem;font-size:1.15rem}
+footer b{font-family:var(--pix);color:#fff}
+
+#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:40}
+h2 .cur{display:inline-block;width:.42em;height:.8em;margin-left:.18em;background:var(--ice);vertical-align:-.04em;box-shadow:0 0 14px var(--ice);animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+.title{animation:pulse 5s ease-in-out 2.4s infinite}
+@keyframes pulse{50%{text-shadow:0 0 16px rgba(190,245,255,1),0 0 64px rgba(196,140,255,1),0 5px 0 rgba(88,28,135,.8)}}
+.title span{cursor:default}
+.title span.done{animation:none}
+.title span.done:hover{animation:zap .45s steps(4)}
+@keyframes zap{0%,100%{transform:none;filter:none}35%{transform:translateY(-12px);filter:brightness(2.4)}70%{transform:translateY(3px)}}
+.rv{opacity:0}
+.rv.in{opacity:1;animation:boot .6s steps(5) backwards;animation-delay:var(--d,0s)}
+.tilt{transition:transform .25s ease-out,box-shadow .25s;will-change:transform}
+.tilt:hover{box-shadow:0 18px 50px rgba(124,58,237,.45),inset 0 1px 0 rgba(255,255,255,.6),inset 0 -1px 0 rgba(255,255,255,.1)}
+.ticker{margin-top:1rem;padding:1.1rem 0;border-radius:999px}
+.ticker div{display:flex;width:max-content;animation:slide 32s linear infinite}
+.ticker:hover div{animation-play-state:paused}
+.ticker span{display:flex;align-items:center;gap:2.6rem;padding-right:2.6rem;font:600 clamp(1.15rem,2.4vw,1.5rem)/1 var(--pix);white-space:nowrap}
+.ticker i{width:10px;height:10px;background:var(--ice);box-shadow:0 0 10px var(--ice);animation:blink 1.6s steps(2) infinite}
+@keyframes slide{to{transform:translateX(-50%)}}
+.loadout ul{list-style:none;padding:0;display:grid;gap:1.2rem;margin-top:1.2rem}
+.loadout li{display:flex;align-items:center;gap:1.1rem}
+.loadout small{display:block;color:var(--ink-soft);font-size:1.05rem;line-height:1.2}
+.loadout b{font:600 clamp(1.25rem,2.6vw,1.5rem)/1.25 var(--pix)}
+.slot{flex:none;width:66px;height:66px;display:grid;place-items:center;border-radius:18px;border:1px solid rgba(255,255,255,.4);
+  background:linear-gradient(160deg,rgba(255,255,255,.32),rgba(255,255,255,.06));box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 6px 16px rgba(18,6,43,.35);
+  font:700 1.35rem/1 var(--pix);color:var(--ice);text-shadow:0 0 10px rgba(217,248,255,.8);animation:bob 2.4s steps(2) infinite;animation-delay:var(--b,0s)}
+@keyframes bob{50%{transform:translateY(-4px)}}
+.spr{width:36px;height:auto;image-rendering:pixelated;filter:drop-shadow(0 0 6px rgba(217,248,255,.8))}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.glass{background:rgba(60,25,110,.85)}}
+</style>
+</head>
+<body>
+<canvas id="bg" aria-hidden="true"></canvas>
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<header class="glass">
+  <a class="logo" href="#top">Nev1er</a>
+  <nav aria-label="Primary">
+    <a href="#work">Work</a><a href="#servers">Servers</a><a href="#esports">Esports</a><a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <h1 class="title" aria-label="Nev1er">
+      <span style="--i:0">N</span><span style="--i:1">E</span><span style="--i:2">V</span><span style="--i:3">1</span><span style="--i:4">E</span><span style="--i:5">R</span>
+    </h1>
+    <p class="tag">Web developer and Discord server builder.</p>
+    <nav class="menu glass" id="menu" aria-label="Main menu">
+      <span class="bar" id="bar" aria-hidden="true"></span>
+      <ul>
+        <li><a href="#work" class="sel">Work</a></li>
+        <li><a href="#servers">Discord servers</a></li>
+        <li><a href="#esports">Esports</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#support" class="extra">Support my work</a></li>
+      </ul>
+    </nav>
+    <p class="hint">Use ↑ ↓ and Enter, or just click.</p>
+  </section>
+
+  <div class="ticker glass" aria-hidden="true"><div>
+    <span>Web developer<i></i>Discord server builder<i></i>OBJ supporter<i></i>Ex-competitive CODM<i></i>Finished All Tomorrows<i></i></span>
+    <span>Web developer<i></i>Discord server builder<i></i>OBJ supporter<i></i>Ex-competitive CODM<i></i>Finished All Tomorrows<i></i></span>
+  </div></div>
+
+  <section id="about">
+    <h2>About</h2>
+    <div class="split">
+      <div class="glass pad">
+        <p>I'm Nev1er. I build websites, and I build Discord servers that people actually want to stay in.</p>
+        <p>Before that, I played Call of Duty: Mobile competitively as an OBJ supporter: the player who clears the way, holds the space and lets the team take the objective. I bring the same habit to my builds. Do the unglamorous setup properly so everyone else can shine.</p>
+      </div>
+      <div class="glass pad loadout">
+        <h3>Player card</h3>
+        <ul>
+          <li><span class="slot" style="--b:0s">&lt;/&gt;</span><span><small>Main class</small><b>Web developer</b></span></li>
+          <li><span class="slot" style="--b:.3s"><canvas class="spr" data-s="hash"></canvas></span><span><small>Side quest</small><b>Discord server builder</b></span></li>
+          <li><span class="slot" style="--b:.6s"><canvas class="spr" data-s="cross"></canvas></span><span><small>Former role</small><b>OBJ supporter, CODM</b></span></li>
+          <li><span class="slot" style="--b:.9s"><canvas class="spr" data-s="book"></canvas></span><span><small>Quest complete</small><b>All Tomorrows</b></span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <h2>Web work</h2>
+    <p class="lede">Two sites I designed and shipped.</p>
+    <div class="grid g2">
+      <article class="glass pad">
+        <h3>Nev1er: Community Architect</h3>
+        <p>My own service site for Discord server building. It lays out the three packages, shows a real build reel and takes enquiries by email.</p>
+        <p class="host">nev1er.github.io</p>
+        <a class="btn" href="https://nev1er.github.io/" target="_blank" rel="noopener">Visit site</a>
+      </article>
+      <article class="glass pad">
+        <h3>Satya Deva House Cleaning</h3>
+        <p>A business site for a deep-cleaning service in Visakhapatnam: services, before-and-after work, a four-step process and a quote form that opens in WhatsApp.</p>
+        <p class="host">satyadeva.vercel.app</p>
+        <a class="btn" href="https://satyadeva.vercel.app/" target="_blank" rel="noopener">Visit site</a>
+      </article>
+    </div>
+  </section>
+
+  <section id="servers">
+    <h2>Discord servers</h2>
+    <p class="lede">This is a build of mine: a server going from empty to fully structured.</p>
+    <div class="split">
+      <div class="glass vid">
+        <video aria-label="Discord server build showcase" controls playsinline preload="metadata" poster="assets/server-poster.jpg" src="assets/server-build.mp4"></video>
+      </div>
+      <div class="grid">
+        <div class="glass pad"><h3>Structure and roles</h3><p>Categories, channels and permissions laid out so members find their footing in seconds.</p></div>
+        <div class="glass pad"><h3>Bots and automation</h3><p>Welcome flows, engagement bots and moderation configured to run the room.</p></div>
+        <div class="glass pad"><h3>Community systems</h3><p>Onboarding, emojis, integrations and custom moderation.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="esports">
+    <h2>Ex-competitive player</h2>
+    <p class="lede">Call of Duty: Mobile, in the role of OBJ supporter. This is my account.</p>
+    <div class="grid g3" style="margin-bottom:1.1rem">
+      <div class="glass stat"><b data-n="123145">123,145</b><span>Multiplayer kills</span></div>
+      <div class="glass stat"><b data-n="8306">8,306</b><span>Games played</span></div>
+      <div class="glass stat"><b data-n="1.64" data-d="2">1.64</b><span>K/D ratio</span></div>
+    </div>
+    <div class="split rev">
+      <div class="glass pad"><img class="media" src="assets/codm-stats.jpg" alt="Call of Duty Mobile multiplayer statistics: 123145 kills, 8306 games, 1.64 K/D, 1907 MVP, 3783 top 3" loading="lazy"></div>
+      <div class="glass pad">
+        <img class="media" src="assets/codm-profile.jpg" alt="Call of Duty Mobile profile card for Nev1er_xD, tier 434" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <section id="reading">
+    <h2>Off the clock</h2>
+    <div class="split">
+      <div class="glass book"><img src="assets/all-tomorrows.jpg" alt="Cover of All Tomorrows by C. M. Kosemen" loading="lazy"></div>
+      <div class="glass pad">
+        <span class="badge">Finished reading</span>
+        <h3>All Tomorrows</h3>
+        <p>C. M. Kosemen's <em>The Myriad Species and Mixed Fortunes of Man</em>: a speculative history of humanity splintering into strange new species. Finished it, and it still shapes how I think about design: everything adapts to what it has to survive.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <h2>Contact</h2>
+    <p class="lede">Need a website or a Discord server? Message me.</p>
+    <div class="grid g2">
+      <a class="glass row" href="https://instagram.com/official.nev1er" target="_blank" rel="noopener"><span><small>Instagram</small><b>@official.nev1er</b></span><span aria-hidden="true">↗</span></a>
+      <a class="glass row" href="mailto:nev1er.work@gmail.com"><span><small>Email</small><b>nev1er.work@gmail.com</b></span><span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+
+  <section id="support">
+    <div class="glass pad" style="text-align:center">
+      <h3 style="color:var(--gold)">Support my work</h3>
+      <p class="lede" style="margin:.3rem auto 0;text-align:center">Enjoyed something I made? You can send support on PayPal.</p>
+      <a class="btn" href="https://paypal.me/PushpaWaghmare" target="_blank" rel="noopener">PayPal: @PushpaWaghmare</a>
+    </div>
+  </section>
+</main>
+
+<footer><b>Nev1er</b> · never stop moving.<br>© 2026 Nev1er<div class="ver">v1.0.0-nev1er</div></footer>
+
+<script>
+/* ===== pixel-art sunset scene (drawn at low resolution, scaled up crisp) ===== */
+(()=>{
+const cv=document.getElementById('bg'),ctx=cv.getContext('2d');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let W=320,H,hz,sx,bg,t=0,clouds=[],embers=[],stars=[],cp=0,sp=0,shoot=null,nextShoot=3;
+const stops=[[0,[18,6,50]],[.35,[76,29,149]],[.65,[168,85,247]],[.86,[244,114,182]],[1,[253,186,140]]];
+const mix=(a,b,k)=>a+(b-a)*k;
+function sky(k){for(let i=1;i<stops.length;i++){if(k<=stops[i][0]){const[a,A]=stops[i-1],[b,B]=stops[i],f=(k-a)/(b-a);return A.map((v,j)=>Math.round(mix(v,B[j],f)))}}return stops[4][1]}
+const rgb=c=>`rgb(${c[0]},${c[1]},${c[2]})`;
+let seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+function disc(g,cx,cy,r,col){g.fillStyle=col;for(let dy=-r;dy<=r;dy++){const w=Math.floor(Math.sqrt(r*r-dy*dy));g.fillRect(cx-w,cy+dy,w*2,1)}}
+function build(){
+  W=Math.max(320,Math.round(180*innerWidth/innerHeight));H=Math.round(W*innerHeight/innerWidth);
+  cv.width=W;cv.height=H;hz=Math.round(H*(H>260?.7:.68));sx=Math.round(W*(H>260?.58:.6));
+  bg=document.createElement('canvas');bg.width=W;bg.height=H;const g=bg.getContext('2d');seed=7;
+  for(let y=0;y<hz;y+=3){g.fillStyle=rgb(sky(y/hz));g.fillRect(0,y,W,3)}
+  for(let r=84;r>6;r-=7){disc(g,sx-18,hz-6,r,`rgba(255,160,205,${.07+(84-r)/900})`)}
+  disc(g,sx-18,hz-6,13,'rgb(255,226,180)');
+  for(let i=0;i<46;i++){g.fillStyle=`rgba(255,255,255,${.3+rnd()*.5})`;g.fillRect(Math.floor(rnd()*W),Math.floor(rnd()*hz*.5),1,1)}
+  /* island, castle, arch */
+const R=(x,y,w,h,c)=>{g.fillStyle=c;g.fillRect(Math.round(x),Math.round(y),w,h)};
+const ix=sx-18,base=hz-4;
+function crenels(x,top,w,c){for(let k=0;k<w;k+=4)R(x+k,top-2,2,2,c)}
+function windows(x,top,w,h){for(let wy=top+6;wy<top+h-4;wy+=7)for(let wx=x+3;wx<x+w-3;wx+=5){R(wx,wy,1,2,rnd()>.6?'#ffd27a':'#150731')}}
+function hall(x,w,h,body,edge,win){R(x,base-h,w,h,body);R(x,base-h,1,h,edge);crenels(x,base-h,w,body);if(win)windows(x,base-h,w,h)}
+function spire(x,w,h,roof,body,edge,win){R(x,base-h,w,h,body);R(x,base-h,1,h,edge);
+  for(let i=0;i<roof;i++){const rw=Math.max(1,Math.round((w+4)*(1-i/roof)));const rx=Math.round(x+w/2-rw/2);R(rx,base-h-1-i,rw,1,body);R(rx,base-h-1-i,1,1,edge)}
+  R(x+Math.floor(w/2),base-h-roof-4,1,4,body);if(win)windows(x,base-h,w,h)}
+/* far layer: pale, hazy */
+const fb='#5e2d9c',fe=fb;
+spire(ix-20,8,60,18,fb,fe);spire(ix+6,10,70,22,fb,fe);spire(ix+38,8,54,16,fb,fe);hall(ix-34,80,32,fb,fe,false);
+/* near layer: dark, lit from the sun on the left */
+const nb='#391a6c',ne='#6e3eae';
+hall(ix-44,106,20,nb,ne,false);
+spire(ix-42,12,40,14,nb,ne,true);
+hall(ix-12,34,48,nb,ne,true);spire(ix-5,20,66,18,nb,ne,false);
+spire(ix+30,14,52,18,nb,ne,true);
+spire(ix+52,9,32,12,nb,ne,true);
+/* rock island with sun-lit rim and an arch */
+const rock='#28104f',rockL='#5a2aa0',rockM='#351566';
+for(let x=ix-84;x<=ix+92;x++){const e=Math.min(1,Math.min(x-(ix-84),(ix+92)-x)/30);
+  const h=Math.max(1,Math.round((8+3*Math.sin(x*.09)+2*Math.sin(x*.31))*Math.pow(e,.7)));
+  R(x,hz-h,1,h+12,rock);R(x,hz-h,1,1,rockL);if((x*7)%11<3)R(x,hz-h+3,1,2,rockM)}
+disc(g,ix-56,hz+4,10,rgb(sky(.93)));R(ix-66,hz,20,4,rgb(sky(.97)));
+R(ix-66,hz-12,20,2,rock);
+
+  /* water */
+  for(let y=hz;y<H;y+=2){const k=(y-hz)/(H-hz);g.fillStyle=rgb([Math.round(mix(255,40,Math.pow(k,.6))),Math.round(mix(150,12,Math.pow(k,.6))),Math.round(mix(190,92,k))]);g.fillRect(0,y,W,2)}
+  /* grass */
+  g.fillStyle='#10052a';for(let x=0;x<W;x++){const h=1+Math.floor(rnd()*(x<W*.5?7:3));g.fillRect(x,H-h,1,h)}g.fillRect(0,H-2,W,2);
+  clouds=[];for(let i=0;i<9;i++)clouds.push({x:rnd()*W,y:hz*(.12+rnd()*.62),s:.5+rnd()*1.1,v:.04+rnd()*.07});
+  embers=[];for(let i=0;i<34;i++)embers.push({x:rnd()*W,y:rnd()*H,v:.03+rnd()*.08,p:rnd()*6});
+  stars=[];for(let i=0;i<70;i++)stars.push({x:Math.floor(rnd()*W),y:Math.floor(rnd()*hz*.8),p:rnd()*6});
+}
+const ct=document.createElement('canvas');ct.width=64;ct.height=40;const cg=ct.getContext('2d');
+function cloud(c){const r=Math.round(5*c.s);cg.clearRect(0,0,64,40);
+  disc(cg,32,20,r,'#ffaae1');disc(cg,32+Math.round(r*1.3),21,Math.round(r*1.3),'#ffaae1');
+  disc(cg,32-Math.round(r*1.2),22,Math.round(r*.8),'#ffaae1');disc(cg,32+Math.round(r*.3),20-Math.round(r*.5),Math.round(r*.9),'#ffd7f0');
+  ctx.globalAlpha=.3;ctx.drawImage(ct,Math.round(c.x)-32,Math.round(c.y)-20);ctx.globalAlpha=1}
+let last=0;
+function frame(now){
+  requestAnimationFrame(frame);
+  if(now-last<33)return;
+  const dt=Math.min(.1,(now-last)/1000),k=dt*60;last=now;
+  t+=reduce?0:dt;ctx.drawImage(bg,0,0);
+  clouds.forEach(c=>{c.x+=reduce?0:c.v*k;if(c.x>W+30)c.x=-30;cloud(c)});
+  for(let y=hz+2;y<H-3;y+=2){const k=(y-hz)/(H-hz),w=Math.round((3+k*22)*(.6+.4*Math.sin(t*2+y*.7)));
+    ctx.fillStyle=`rgba(255,226,190,${.5-k*.3})`;ctx.fillRect(sx-18-Math.round(w/2)+Math.round(Math.sin(t+y)*2),y,w,1)}
+  const by=hz+1+Math.round(Math.sin(t*1.4)),bx=sx-34;
+  ctx.fillStyle='#160630';ctx.fillRect(bx-9,by,19,1);ctx.fillRect(bx-8,by+1,17,1);ctx.fillRect(bx-5,by+2,11,1);
+  ctx.fillRect(bx,by-20,1,20);ctx.fillRect(bx+10,by-3,3,1);
+  for(let s=0;s<16;s++)ctx.fillRect(bx+1,by-18+s,2+Math.round(s*.6),1);
+  for(let s=0;s<11;s++){const w=1+Math.round(s*.5);ctx.fillRect(bx-w,by-13+s,w,1)}
+  ctx.fillStyle='rgba(22,6,48,.35)';ctx.fillRect(bx-6,by+4,13,1);ctx.fillRect(bx-4,by+6,9,1);
+  cp+=(sp-cp)*(1-Math.pow(.95,k));ctx.fillStyle=`rgba(10,2,38,${(cp*.5).toFixed(3)})`;ctx.fillRect(0,0,W,H);
+  stars.forEach(a=>{ctx.fillStyle=`rgba(255,255,255,${((.15+cp*.7)*(.5+.5*Math.sin(t*2.2+a.p))).toFixed(3)})`;ctx.fillRect(a.x,a.y,1,1)});
+  if(!reduce){if(!shoot&&t>nextShoot){shoot={x:Math.random()*W*.7,y:Math.random()*hz*.3,l:0};nextShoot=t+6+Math.random()*8}
+    if(shoot){shoot.x+=2.4*k;shoot.y+=1.1*k;shoot.l+=k;for(let i=0;i<10;i++){ctx.fillStyle=`rgba(255,255,255,${1-i/10})`;ctx.fillRect(Math.round(shoot.x-i*2.4),Math.round(shoot.y-i*1.1),1,1)}if(shoot.l>70)shoot=null}}
+  embers.forEach(e=>{e.y-=reduce?0:e.v*k;e.x+=reduce?0:Math.sin(t+e.p)*.05*k;if(e.y<0){e.y=H;e.x=Math.random()*W}
+    ctx.fillStyle=`rgba(255,230,200,${.35+.35*Math.sin(t*3+e.p)})`;ctx.fillRect(Math.round(e.x),Math.round(e.y),1,1)});
+}
+/* rebuild only on real size changes (phone address bars resize the window constantly) */
+let lw=0,lh=0;
+addEventListener('resize',()=>{if(innerWidth!==lw||Math.abs(innerHeight-lh)>140){lw=innerWidth;lh=innerHeight;build()}});
+const readScroll=()=>{sp=Math.min(1,scrollY/Math.max(1,document.documentElement.scrollHeight-innerHeight))};
+addEventListener('scroll',readScroll,{passive:true});
+lw=innerWidth;lh=innerHeight;build();readScroll();cp=sp;requestAnimationFrame(frame);
+})();
+
+/* ===== Dead Cells-style menu ===== */
+(()=>{
+const menu=document.getElementById('menu'),links=[...menu.querySelectorAll('a')],bar=document.getElementById('bar');let cur=0;
+function place(){const m=menu.getBoundingClientRect(),f=links[0].getBoundingClientRect(),c=links[cur].getBoundingClientRect();
+  bar.style.top=(f.top-m.top)+'px';bar.style.transform=`translateY(${c.top-f.top}px)`}
+function sel(i){cur=(i+links.length)%links.length;links.forEach((l,j)=>l.classList.toggle('sel',j==cur));place()}
+links.forEach((l,i)=>{l.addEventListener('mouseenter',()=>sel(i));l.addEventListener('focus',()=>sel(i))});
+sel(0);addEventListener('resize',place);if(document.fonts)document.fonts.ready.then(place);
+addEventListener('keydown',e=>{
+  if(scrollY>innerHeight*.5)return;
+  if(e.key==='ArrowDown'){e.preventDefault();sel(cur+1)}
+  if(e.key==='ArrowUp'){e.preventDefault();sel(cur-1)}
+  if(e.key==='Enter'&&document.activeElement===document.body)links[cur].click();
+});
+})();
+
+/* ===== glass specular light follows the pointer ===== */
+document.querySelectorAll('.glass').forEach(el=>el.addEventListener('pointermove',e=>{
+  const r=el.getBoundingClientRect();el.style.setProperty('--mx',(e.clientX-r.left)+'px');el.style.setProperty('--my',(e.clientY-r.top)+'px')}));
+
+/* ===== stat count-up ===== */
+(()=>{
+const els=document.querySelectorAll('[data-n]');
+if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+els.forEach(e=>{e.textContent='0'});
+const run=el=>{const n=+el.dataset.n,d=+(el.dataset.d||0),t0=performance.now(),dur=1400;
+  (function s(t){const k=Math.min(1,(t-t0)/dur),v=n*(1-Math.pow(1-k,3));el.textContent=d?v.toFixed(d):Math.round(v).toLocaleString('en-US');if(k<1)requestAnimationFrame(s)})(t0)};
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){run(e.target);io.unobserve(e.target)}}),{threshold:.6});
+els.forEach(e=>io.observe(e));
+})();
+
+/* ===== heading decode, card boot-in, tilt, sprites, cursor sparks ===== */
+(()=>{
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* pixel sprites */
+const SP={
+ hash:["..X...X..","..X...X..","XXXXXXXXX","..X...X..","..X...X..","XXXXXXXXX","..X...X..","..X...X.."],
+ cross:["....X....","....X....","..XX.XX..",".X.....X.","XX..X..XX",".X.....X.","..XX.XX..","....X....","....X...."],
+ book:["XXXX.XXXX","X..X.X..X","X..X.X..X","X..X.X..X","X..XXX..X","XXXXXXXXX"]};
+document.querySelectorAll('canvas.spr').forEach(c=>{const m=SP[c.dataset.s],g=c.getContext('2d');c.width=m[0].length;c.height=m.length;g.fillStyle='#d9f8ff';
+  m.forEach((r,y)=>[...r].forEach((ch,x)=>{if(ch==='X')g.fillRect(x,y,1,1)}))});
+document.querySelectorAll('.title span').forEach(l=>l.addEventListener('animationend',e=>{if(e.animationName==='boot')l.classList.add('done')}));
+/* heading decode */
+const GL='ABCDEFGHJKLMNPQRSTUVWXYZ0123456789#%&*+=<>/';
+document.querySelectorAll('h2').forEach(h=>{
+  const txt=h.textContent.trim();h.setAttribute('aria-label',txt);
+  h.innerHTML='<span aria-hidden="true"></span><i class="cur" aria-hidden="true"></i>';const tx=h.firstChild;let timer;
+  const scr=n=>[...txt].map((ch,i)=>ch===' '||i<n?ch:GL[Math.floor(Math.random()*GL.length)]).join('');
+  const play=()=>{clearInterval(timer);if(reduce){tx.textContent=txt;return}let f=0;
+    timer=setInterval(()=>{tx.textContent=scr(Math.floor(f/2.2));if(++f>txt.length*2.2+2){tx.textContent=txt;clearInterval(timer)}},45)};
+  tx.textContent=reduce?txt:scr(0);h._play=play;h.addEventListener('pointerenter',play);
+});
+/* reveal on scroll */
+const targets=[...document.querySelectorAll('main section:not(.hero) .glass, .ticker')];
+targets.forEach(el=>{el.classList.add('rv');const i=[...el.parentElement.children].indexOf(el);el.style.setProperty('--d',(i*.1)+'s')});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;e.target.classList.add('in');io.unobserve(e.target)}),{threshold:.12});
+targets.forEach(el=>io.observe(el));
+const io2=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target._play();io2.unobserve(e.target)}}),{threshold:.6});
+document.querySelectorAll('h2').forEach(h=>io2.observe(h));
+/* tilt + sparks (mouse only) */
+if(matchMedia('(hover:hover)').matches&&!reduce){
+  document.querySelectorAll('main section:not(.hero) .glass.pad, .stat, a.row').forEach(el=>{el.classList.add('tilt');
+    el.addEventListener('pointermove',e=>{if(e.pointerType!=='mouse')return;const r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
+      el.style.transform=`perspective(900px) rotateX(${((.5-y)*5).toFixed(2)}deg) rotateY(${((x-.5)*7).toFixed(2)}deg) translateY(-3px)`});
+    el.addEventListener('pointerleave',()=>{el.style.transform=''})});
+  const fx=document.getElementById('fx'),g=fx.getContext('2d'),ps=[];let run=false;
+  const size=()=>{fx.width=innerWidth;fx.height=innerHeight};size();addEventListener('resize',size);
+  const cols=['#d9f8ff','#e879f9','#c4b5fd','#ffffff'];
+  addEventListener('pointermove',e=>{if(e.pointerType!=='mouse')return;
+    for(let i=0;i<2;i++)ps.push({x:e.clientX+(Math.random()-.5)*8,y:e.clientY+(Math.random()-.5)*8,vx:(Math.random()-.5)*1.2,vy:Math.random()*1.2+.2,l:1,s:3+Math.floor(Math.random()*3),c:cols[Math.floor(Math.random()*4)]});
+    if(!run){run=true;requestAnimationFrame(loop)}});
+  function loop(){g.clearRect(0,0,fx.width,fx.height);
+    for(let i=ps.length-1;i>=0;i--){const a=ps[i];a.x+=a.vx;a.y+=a.vy;a.vy+=.04;a.l-=.03;if(a.l<=0){ps.splice(i,1);continue}
+      g.globalAlpha=a.l;g.fillStyle=a.c;g.fillRect(Math.round(a.x/4)*4,Math.round(a.y/4)*4,a.s,a.s)}
+    g.globalAlpha=1;if(ps.length)requestAnimationFrame(loop);else run=false}
+}
+})();
+</script>
+</body>
+</html>
