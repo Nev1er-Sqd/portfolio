@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nev1er | Web developer and Discord server builder</title>
-<meta name="description" content="Nev1er is a web developer and Discord server builder. Ex-competitive Call of Duty: Mobile player.">
+<title>nev1er | Web developer and Discord server builder</title>
+<meta name="description" content="nev1er is a web developer and Discord server builder. Ex-competitive Call of Duty: Mobile player.">
 <meta name="theme-color" content="#1a0b3d">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Crect width=%2216%22 height=%2216%22 fill=%22%231a0b3d%22/%3E%3Cpath d=%22M3 13V3h2l6 7V3h2v10h-2L5 6v7z%22 fill=%22%23e9d5ff%22/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -128,6 +128,78 @@ h2 .cur{display:inline-block;width:.42em;height:.8em;margin-left:.18em;backgroun
   font:700 1.35rem/1 var(--pix);color:var(--ice);text-shadow:0 0 10px rgba(217,248,255,.8);animation:bob 2.4s steps(2) infinite;animation-delay:var(--b,0s)}
 @keyframes bob{50%{transform:translateY(-4px)}}
 .spr{width:36px;height:auto;image-rendering:pixelated;filter:drop-shadow(0 0 6px rgba(217,248,255,.8))}
+
+/* compact CODM screenshots */
+.shots{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:center;gap:1.2rem;padding:1rem 1.2rem}
+.shots a{display:block;text-decoration:none;text-align:center;transition:transform .15s steps(3)}
+.shots a:hover{transform:translateY(-3px)}
+.shots .media{width:auto;max-width:100%;height:clamp(105px,17vw,140px);object-fit:cover;box-shadow:0 6px 18px rgba(18,6,43,.45)}
+.shots small{display:block;margin-top:.5rem;font:400 .95rem/1.2 var(--pix);color:var(--ink-soft)}
+
+/* floating Discord server cards */
+.srv{margin-top:1.8rem}
+.srv-title{margin-top:2.4rem;margin-bottom:0}
+.fl{animation:float 5.5s ease-in-out infinite;animation-delay:var(--f,0s)}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.srvcard{display:flex;align-items:center;gap:1.4rem}
+.sicon{position:relative;flex:none;width:92px;height:92px}
+.sicon img{position:relative;width:100%;height:100%;object-fit:cover;border-radius:24px;border:1px solid rgba(255,255,255,.55);background:#1a0b3d;box-shadow:0 0 24px rgba(167,139,250,.65),0 6px 16px rgba(18,6,43,.5)}
+.orb{position:absolute;inset:-12px;pointer-events:none;animation:orbit 8s steps(32) infinite}
+.orb i{position:absolute;width:7px;height:7px;background:var(--ice);box-shadow:0 0 10px var(--ice)}
+.orb i:nth-child(1){top:0;left:50%}
+.orb i:nth-child(2){bottom:0;left:50%;background:var(--orchid);box-shadow:0 0 10px var(--orchid)}
+@keyframes orbit{to{transform:rotate(360deg)}}
+.sbody h3{margin-bottom:.3rem}
+.sbody .badge{margin-bottom:.7rem}
+.sbody p{font-size:1.02em;line-height:1.45}
+.sbody .btn{margin-top:1rem;padding:.8rem 1.2rem;font-size:1.05rem}
+@media(max-width:520px){.srvcard{flex-direction:column;align-items:flex-start}}
+
+/* compact About + orbit player card */
+.about-split{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+@media(max-width:780px){.about-split{grid-template-columns:1fr}}
+.about-txt{display:flex;flex-direction:column;justify-content:center}
+.about-txt p{font-size:1.05em;line-height:1.5}
+.kick{font:600 1rem/1 var(--pix);color:var(--lilac);letter-spacing:.1em;margin-bottom:.9rem}
+.orbit-card{display:flex;flex-direction:column;align-items:center;gap:.4rem;padding:1.3rem 1rem 1.4rem}
+.orbit{--s:min(76vw,300px);--n:calc(var(--s)*.19);position:relative;width:var(--s);height:var(--s);flex:none}
+.orbit::before{content:"";position:absolute;inset:calc(var(--s)*.14);border-radius:50%;background:radial-gradient(circle,rgba(167,139,250,.38),rgba(232,121,249,.12) 55%,transparent 72%);pointer-events:none}
+.ring-text{position:absolute;inset:0;width:100%;height:100%;animation:ospin 48s linear infinite reverse}
+.ring-text text{font-family:var(--pix);font-weight:600;font-size:13px;fill:var(--lilac)}
+.o-path{position:absolute;inset:calc(var(--s)*.23);border:1px dashed rgba(217,248,255,.38);border-radius:50%;pointer-events:none}
+.core{position:absolute;left:50%;top:50%;width:calc(var(--s)*.27);height:calc(var(--s)*.27);transform:translate(-50%,-50%);border-radius:50%;display:grid;place-items:center;
+  font-family:var(--pix);font-weight:700;font-size:calc(var(--s)*.12);line-height:1;color:var(--ice);text-shadow:0 0 12px rgba(217,248,255,.9);
+  background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.5),rgba(150,120,255,.38) 60%,rgba(40,14,90,.55));
+  border:1px solid rgba(255,255,255,.55);box-shadow:0 0 26px rgba(167,139,250,.8),inset 0 1px 0 rgba(255,255,255,.6);animation:corepulse 3s ease-in-out infinite}
+@keyframes corepulse{50%{box-shadow:0 0 42px rgba(232,121,249,.9),inset 0 1px 0 rgba(255,255,255,.6)}}
+.orb-spin{position:absolute;inset:0;animation:ospin 30s linear infinite}
+.node{position:absolute;left:50%;top:50%;width:var(--n);height:var(--n);margin:calc(var(--n)*-.5) 0 0 calc(var(--n)*-.5);padding:0;border:0;background:none;color:inherit;cursor:pointer;
+  transform:rotate(var(--a)) translateX(calc(var(--s)*.27)) rotate(calc(var(--a)*-1))}
+.nin{display:grid;place-items:center;width:100%;height:100%;border-radius:30%;border:1px solid rgba(255,255,255,.45);
+  background:linear-gradient(160deg,rgba(255,255,255,.34),rgba(255,255,255,.08));box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 6px 16px rgba(18,6,43,.4);
+  font-family:var(--pix);font-weight:700;font-size:calc(var(--n)*.34);line-height:1;color:var(--ice);text-shadow:0 0 10px rgba(217,248,255,.8);
+  animation:ospin 30s linear infinite reverse;transition:box-shadow .25s,background .25s}
+.node .spr{width:calc(var(--n)*.52)}
+.node.on .nin{background:linear-gradient(160deg,rgba(232,121,249,.75),rgba(150,120,255,.45));box-shadow:0 0 22px rgba(232,121,249,.85),inset 0 1px 0 rgba(255,255,255,.7)}
+@keyframes ospin{to{transform:rotate(360deg)}}
+@media(hover:hover){.orbit:hover .orb-spin,.orbit:hover .nin,.orbit:hover .ring-text{animation-play-state:paused}}
+.oinfo{text-align:center;min-height:3.6rem}
+.oinfo small{display:block;color:var(--ink-soft);font-size:1.05rem;line-height:1.2}
+.oinfo b{display:block;font:600 clamp(1.3rem,3vw,1.6rem)/1.25 var(--pix);color:var(--ice);text-shadow:0 0 14px rgba(180,240,255,.5);animation:boot .4s steps(4) backwards}
+
+/* glowing sweep border on the Discord cards */
+@property --ang{syntax:"<angle>";initial-value:0deg;inherits:false}
+.fl{position:relative;border-radius:22px}
+.fl::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;border-radius:22px;padding:2px;
+  background:conic-gradient(from var(--ang),transparent 0 62%,var(--orchid) 80%,var(--ice) 92%,transparent);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;animation:angspin 5s linear infinite}
+@keyframes angspin{to{--ang:360deg}}
+
+/* scroll progress bar */
+#prog{position:fixed;top:0;left:0;right:0;height:3px;z-index:30;transform-origin:0 50%;transform:scaleX(0);pointer-events:none;
+  background:linear-gradient(90deg,var(--lilac),var(--orchid),var(--ice));box-shadow:0 0 12px rgba(232,121,249,.8)}
+
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.glass{background:rgba(60,25,110,.85)}}
 </style>
@@ -135,9 +207,10 @@ h2 .cur{display:inline-block;width:.42em;height:.8em;margin-left:.18em;backgroun
 <body>
 <canvas id="bg" aria-hidden="true"></canvas>
 <canvas id="fx" aria-hidden="true"></canvas>
+<div id="prog" aria-hidden="true"></div>
 
 <header class="glass">
-  <a class="logo" href="#top">Nev1er</a>
+  <a class="logo" href="#top">nev1er</a>
   <nav aria-label="Primary">
     <a href="#work">Work</a><a href="#servers">Servers</a><a href="#esports">Esports</a><a href="#contact">Contact</a>
   </nav>
@@ -145,8 +218,8 @@ h2 .cur{display:inline-block;width:.42em;height:.8em;margin-left:.18em;backgroun
 
 <main id="top">
   <section class="hero">
-    <h1 class="title" aria-label="Nev1er">
-      <span style="--i:0">N</span><span style="--i:1">E</span><span style="--i:2">V</span><span style="--i:3">1</span><span style="--i:4">E</span><span style="--i:5">R</span>
+    <h1 class="title" aria-label="nev1er">
+      <span style="--i:0">n</span><span style="--i:1">e</span><span style="--i:2">v</span><span style="--i:3">1</span><span style="--i:4">e</span><span style="--i:5">r</span>
     </h1>
     <p class="tag">Web developer and Discord server builder.</p>
     <nav class="menu glass" id="menu" aria-label="Main menu">
@@ -156,7 +229,6 @@ h2 .cur{display:inline-block;width:.42em;height:.8em;margin-left:.18em;backgroun
         <li><a href="#servers">Discord servers</a></li>
         <li><a href="#esports">Esports</a></li>
         <li><a href="#contact">Contact</a></li>
-        <li><a href="#support" class="extra">Support my work</a></li>
       </ul>
     </nav>
     <p class="hint">Use ↑ ↓ and Enter, or just click.</p>
@@ -169,19 +241,25 @@ h2 .cur{display:inline-block;width:.42em;height:.8em;margin-left:.18em;backgroun
 
   <section id="about">
     <h2>About</h2>
-    <div class="split">
-      <div class="glass pad">
-        <p>I'm Nev1er. I build websites, and I build Discord servers that people actually want to stay in.</p>
-        <p>Before that, I played Call of Duty: Mobile competitively as an OBJ supporter: the player who clears the way, holds the space and lets the team take the objective. I bring the same habit to my builds. Do the unglamorous setup properly so everyone else can shine.</p>
+    <div class="split about-split">
+      <div class="glass pad about-txt">
+        <span class="kick">// WHO I AM</span>
+        <p>I build websites and Discord servers people actually want to stay in.</p>
+        <p>Ex-CODM OBJ supporter: I do the setup right so everyone else can shine.</p>
       </div>
-      <div class="glass pad loadout">
-        <h3>Player card</h3>
-        <ul>
-          <li><span class="slot" style="--b:0s">&lt;/&gt;</span><span><small>Main class</small><b>Web developer</b></span></li>
-          <li><span class="slot" style="--b:.3s"><canvas class="spr" data-s="hash"></canvas></span><span><small>Side quest</small><b>Discord server builder</b></span></li>
-          <li><span class="slot" style="--b:.6s"><canvas class="spr" data-s="cross"></canvas></span><span><small>Former role</small><b>OBJ supporter, CODM</b></span></li>
-          <li><span class="slot" style="--b:.9s"><canvas class="spr" data-s="book"></canvas></span><span><small>Quest complete</small><b>All Tomorrows</b></span></li>
-        </ul>
+      <div class="glass pad orbit-card">
+        <div class="orbit" id="orbit">
+          <svg class="ring-text" viewBox="0 0 300 300" aria-hidden="true"><defs><path id="rp" d="M150,150 m-118,0 a118,118 0 1,1 236,0 a118,118 0 1,1 -236,0"/></defs><text><textPath href="#rp" textLength="738" lengthAdjust="spacing">WEB DEV • DISCORD BUILDER • OBJ SUPPORT • CODM • NEVER STOP MOVING • </textPath></text></svg>
+          <span class="o-path" aria-hidden="true"></span>
+          <div class="core" aria-hidden="true">N</div>
+          <div class="orb-spin">
+            <button class="node" type="button" style="--a:-90deg" data-k="Main class" data-v="Web developer" aria-label="Main class: Web developer"><span class="nin">&lt;/&gt;</span></button>
+            <button class="node" type="button" style="--a:0deg" data-k="Side quest" data-v="Discord server builder" aria-label="Side quest: Discord server builder"><span class="nin"><canvas class="spr" data-s="hash"></canvas></span></button>
+            <button class="node" type="button" style="--a:90deg" data-k="Former role" data-v="OBJ supporter, CODM" aria-label="Former role: OBJ supporter, CODM"><span class="nin"><canvas class="spr" data-s="cross"></canvas></span></button>
+            <button class="node" type="button" style="--a:180deg" data-k="Quest complete" data-v="All Tomorrows" aria-label="Quest complete: All Tomorrows"><span class="nin"><canvas class="spr" data-s="book"></canvas></span></button>
+          </div>
+        </div>
+        <div class="oinfo" id="oinfo" aria-live="polite"></div>
       </div>
     </div>
   </section>
@@ -191,7 +269,7 @@ h2 .cur{display:inline-block;width:.42em;height:.8em;margin-left:.18em;backgroun
     <p class="lede">Two sites I designed and shipped.</p>
     <div class="grid g2">
       <article class="glass pad">
-        <h3>Nev1er: Community Architect</h3>
+        <h3>nev1er: Community Architect</h3>
         <p>My own service site for Discord server building. It lays out the three packages, shows a real build reel and takes enquiries by email.</p>
         <p class="host">nev1er.github.io</p>
         <a class="btn" href="https://nev1er.github.io/" target="_blank" rel="noopener">Visit site</a>
@@ -218,6 +296,32 @@ h2 .cur{display:inline-block;width:.42em;height:.8em;margin-left:.18em;backgroun
         <div class="glass pad"><h3>Community systems</h3><p>Onboarding, emojis, integrations and custom moderation.</p></div>
       </div>
     </div>
+
+    <h3 class="srv-title">Live communities I've built</h3>
+    <div class="grid g2 srv">
+      <div class="fl" style="--f:0s">
+        <article class="glass pad srvcard">
+          <div class="sicon"><span class="orb" aria-hidden="true"><i></i><i></i></span><img src="discord-codm.jpg" alt="Logo of the CODM YouTuber community Discord server" loading="lazy"></div>
+          <div class="sbody">
+            <span class="badge">Community server</span>
+            <h3>CODM YouTuber Community</h3>
+            <p>A server I built for a Call of Duty: Mobile YouTuber and his community.</p>
+            <a class="btn" href="https://discord.gg/qKvSBAPAvB" target="_blank" rel="noopener">Join server ↗</a>
+          </div>
+        </article>
+      </div>
+      <div class="fl" style="--f:1.4s">
+        <article class="glass pad srvcard">
+          <div class="sicon"><span class="orb" aria-hidden="true"><i></i><i></i></span><img src="discord-munchi.jpg" alt="Logo of the Munchiweeb Discord server" loading="lazy"></div>
+          <div class="sbody">
+            <span class="badge">120k+ subs</span>
+            <h3>Munchiweeb</h3>
+            <p>The Discord home for @Munchiweeb, a YouTuber with over 120k subscribers.</p>
+            <a class="btn" href="https://discord.gg/fC4NU4Wk4p" target="_blank" rel="noopener">Join server ↗</a>
+          </div>
+        </article>
+      </div>
+    </div>
   </section>
 
   <section id="esports">
@@ -228,11 +332,9 @@ h2 .cur{display:inline-block;width:.42em;height:.8em;margin-left:.18em;backgroun
       <div class="glass stat"><b data-n="8306">8,306</b><span>Games played</span></div>
       <div class="glass stat"><b data-n="1.64" data-d="2">1.64</b><span>K/D ratio</span></div>
     </div>
-    <div class="split rev">
-      <div class="glass pad"><img class="media" src="codm-stats.jpg" alt="Call of Duty Mobile multiplayer statistics: 123145 kills, 8306 games, 1.64 K/D, 1907 MVP, 3783 top 3" loading="lazy"></div>
-      <div class="glass pad">
-        <img class="media" src="codm-profile.jpg" alt="Call of Duty Mobile profile card for Nev1er_xD, tier 434" loading="lazy">
-      </div>
+    <div class="glass shots">
+      <a href="codm-stats.jpg" target="_blank" rel="noopener"><img class="media" src="codm-stats.jpg" alt="Call of Duty Mobile multiplayer statistics: 123145 kills, 8306 games, 1.64 K/D, 1907 MVP, 3783 top 3" loading="lazy"><small>Multiplayer stats</small></a>
+      <a href="codm-profile.jpg" target="_blank" rel="noopener"><img class="media" src="codm-profile.jpg" alt="Call of Duty Mobile profile card for Nev1er_xD, tier 434" loading="lazy"><small>Profile card</small></a>
     </div>
   </section>
 
@@ -256,17 +358,9 @@ h2 .cur{display:inline-block;width:.42em;height:.8em;margin-left:.18em;backgroun
       <a class="glass row" href="mailto:nev1er.work@gmail.com"><span><small>Email</small><b>nev1er.work@gmail.com</b></span><span aria-hidden="true">↗</span></a>
     </div>
   </section>
-
-  <section id="support">
-    <div class="glass pad" style="text-align:center">
-      <h3 style="color:var(--gold)">Support my work</h3>
-      <p class="lede" style="margin:.3rem auto 0;text-align:center">Enjoyed something I made? You can send support on PayPal.</p>
-      <a class="btn" href="https://paypal.me/PushpaWaghmare" target="_blank" rel="noopener">PayPal: @PushpaWaghmare</a>
-    </div>
-  </section>
 </main>
 
-<footer><b>Nev1er</b> · never stop moving.<br>© 2026 Nev1er<div class="ver">v1.0.0-nev1er</div></footer>
+<footer><b>nev1er</b> · never stop moving.<br>© 2026 nev1er<div class="ver">v1.0.0-nev1er</div></footer>
 
 <script>
 /* ===== pixel-art sunset scene (drawn at low resolution, scaled up crisp) ===== */
@@ -434,6 +528,25 @@ if(matchMedia('(hover:hover)').matches&&!reduce){
       g.globalAlpha=a.l;g.fillStyle=a.c;g.fillRect(Math.round(a.x/4)*4,Math.round(a.y/4)*4,a.s,a.s)}
     g.globalAlpha=1;if(ps.length)requestAnimationFrame(loop);else run=false}
 }
+})();
+
+/* ===== orbit player card + scroll progress ===== */
+(()=>{
+const o=document.getElementById('orbit'),info=document.getElementById('oinfo');
+if(o&&info){
+  const nodes=[...o.querySelectorAll('.node')],reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;let cur=0,hold=0;
+  const show=i=>{cur=i;nodes.forEach((n,j)=>n.classList.toggle('on',j===i));
+    info.innerHTML='<small></small><b></b>';info.firstChild.textContent=nodes[i].dataset.k;info.lastChild.textContent=nodes[i].dataset.v};
+  nodes.forEach((n,i)=>{
+    n.addEventListener('click',()=>{hold=Date.now()+9000;show(i)});
+    n.addEventListener('mouseenter',()=>{hold=Date.now()+9000;show(i)});
+    n.addEventListener('focus',()=>show(i))});
+  show(0);
+  if(!reduce)setInterval(()=>{if(Date.now()>hold)show((cur+1)%nodes.length)},3200);
+}
+const prog=document.getElementById('prog');
+const upd=()=>{prog.style.transform='scaleX('+Math.min(1,scrollY/Math.max(1,document.documentElement.scrollHeight-innerHeight)).toFixed(4)+')'};
+addEventListener('scroll',upd,{passive:true});upd();
 })();
 </script>
 </body>
